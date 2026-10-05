@@ -1,0 +1,67 @@
+/* PWA — Motion & Animation Tokens */
+
+:root {
+  /* ── Easing Curves ─────────────────────────────────────────────────── */
+  --ease-linear:  linear; /* @kind other */
+  --ease-in:      cubic-bezier(0.55, 0, 1, 0.45); /* @kind other */
+  --ease-out:     cubic-bezier(0.25, 0.46, 0.45, 0.94); /* @kind other */
+  --ease-in-out:  cubic-bezier(0.45, 0, 0.55, 1); /* @kind other */
+  --ease-smooth:  cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1); /* @kind other */
+  --ease-bounce:  cubic-bezier(0.68, -0.55, 0.265, 1.55); /* @kind other */
+  --ease-decel:   cubic-bezier(0.0, 0.0, 0.2, 1); /* @kind other */
+  --ease-accel:   cubic-bezier(0.4, 0.0, 1,   1); /* @kind other */
+
+  /* ── Durations ─────────────────────────────────────────────────────── */
+  --duration-instant:  50ms; /* @kind other */
+  --duration-fast:    120ms; /* @kind other */
+  --duration-base:    240ms; /* @kind other */
+  --duration-slow:    400ms; /* @kind other */
+  --duration-slower:  600ms; /* @kind other */
+  --duration-page:    800ms; /* @kind other */
+
+  /* ── Pre-built Transitions ─────────────────────────────────────────── */
+  --transition-base:      all            var(--duration-base)  var(--ease-out); /* @kind other */
+  --transition-colors:    color          var(--duration-fast)  var(--ease-out),
+                          background     var(--duration-fast)  var(--ease-out),
+                          border-color   var(--duration-fast)  var(--ease-out),
+                          fill           var(--duration-fast)  var(--ease-out); /* @kind other */
+  --transition-transform: transform      var(--duration-base)  var(--ease-spring); /* @kind other */
+  --transition-shadow:    box-shadow     var(--duration-base)  var(--ease-out); /* @kind other */
+  --transition-opacity:   opacity        var(--duration-base)  var(--ease-out); /* @kind other */
+  --transition-fade-up:   opacity        var(--duration-slow)  var(--ease-out),
+                          transform      var(--duration-slow)  var(--ease-out); /* @kind other */
+}
+
+/* ── Keyframes ───────────────────────────────────────────────────────── */
+@keyframes pwa-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pwa-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pwa-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pwa-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes pwa-slide-in-right {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pwa-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(77, 196, 232, 0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(77, 196, 232, 0); }
+}
+@keyframes pwa-float {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes pwa-shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}

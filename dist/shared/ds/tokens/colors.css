@@ -1,0 +1,87 @@
+/* PWA — Color Tokens
+   Derived from the PWA logo:
+     Navy  #132272 — P & A letterforms, "Pure Water" wordmark (authority, depth)
+     Sky   #4DC4E8 — wave/arrow mark, "AUTOMATIONS" text (clarity, flow, innovation) */
+
+:root {
+  /* ── Brand: Navy Scale ─────────────────────────────────────────────── */
+  --color-navy-50:  #eef0fa;
+  --color-navy-100: #d5daf4;
+  --color-navy-200: #b3bcec;
+  --color-navy-300: #8a9ae1;
+  --color-navy-400: #6278d5;
+  --color-navy-500: #4059c7;
+  --color-navy-600: #2f48b4;
+  --color-navy-700: #22359e;
+  --color-navy-800: #1a278a;
+  --color-navy-900: #132272;   /* ← Primary brand color */
+
+  /* ── Brand: Sky Scale ──────────────────────────────────────────────── */
+  --color-sky-50:  #e7f8fd;
+  --color-sky-100: #c4eef9;
+  --color-sky-200: #9ae2f5;
+  --color-sky-300: #6dd5f0;
+  --color-sky-400: #4dc4e8;   /* ← Primary brand accent */
+  --color-sky-500: #2ab0d8;
+  --color-sky-600: #1e97be;
+  --color-sky-700: #157ba0;
+  --color-sky-800: #0d5e7e;
+  --color-sky-900: #07415c;
+
+  /* ── Neutral (Apple-aligned grays) ────────────────────────────────── */
+  --color-neutral-0:   #ffffff;
+  --color-neutral-50:  #f5f5f7;
+  --color-neutral-100: #e8e8ed;
+  --color-neutral-200: #d2d2d7;
+  --color-neutral-300: #b5b5bb;
+  --color-neutral-400: #98989d;
+  --color-neutral-500: #7c7c82;
+  --color-neutral-600: #6e6e73;
+  --color-neutral-700: #48484a;
+  --color-neutral-800: #3a3a3c;
+  --color-neutral-900: #1d1d1f;
+
+  /* ── Semantic ──────────────────────────────────────────────────────── */
+  --color-success-light: #d4f5e2;
+  --color-success:       #30c97a;
+  --color-success-dark:  #1a7a4a;
+
+  --color-warning-light: #fff3d4;
+  --color-warning:       #ffb340;
+  --color-warning-dark:  #966200;
+
+  --color-error-light:   #fde8e8;
+  --color-error:         #f04c4c;
+  --color-error-dark:    #a01a1a;
+
+  --color-info-light:    #dff0fc;
+  --color-info:          #4dc4e8;
+  --color-info-dark:     #0d5e7e;
+
+  /* ── Semantic Aliases (use these in components) ────────────────────── */
+  --color-bg:              var(--color-neutral-0);
+  --color-bg-secondary:    var(--color-neutral-50);
+  --color-bg-tertiary:     var(--color-neutral-100);
+
+  --color-surface:         var(--color-neutral-0);
+  --color-surface-raised:  var(--color-neutral-50);
+
+  --color-border:          var(--color-neutral-200);
+  --color-border-subtle:   var(--color-neutral-100);
+  --color-border-strong:   var(--color-neutral-300);
+
+  --color-text-primary:    var(--color-neutral-900);
+  --color-text-secondary:  var(--color-neutral-600);
+  --color-text-tertiary:   var(--color-neutral-400);
+  --color-text-inverse:    var(--color-neutral-0);
+  --color-text-brand:      var(--color-navy-900);
+  --color-text-accent:     var(--color-sky-500);
+
+  --color-accent:          var(--color-sky-400);
+  --color-brand:           var(--color-navy-900);
+
+  /* ── Glass / Frost ─────────────────────────────────────────────────── */
+  --color-glass-bg:        rgba(255, 255, 255, 0.72);
+  --color-glass-border:    rgba(255, 255, 255, 0.55);
+  --color-overlay:         rgba(13, 29, 95, 0.5);
+}

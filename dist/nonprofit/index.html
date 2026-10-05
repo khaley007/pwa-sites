@@ -400,7 +400,8 @@
       <h2 style="font-size: clamp(26px, 3vw, 36px);">Send us a message instead</h2>
       <p>The fastest path is still the free assessment call, but if email suits you better, tell us a little about your organization and we'll reply within one business day.</p>
     </div>
-    <form class="lead-form-card" data-lead-form>
+    <form class="lead-form-card" data-lead-form onsubmit="return false;">
+      <p class="preview-form-notice" role="note"><strong>Preview only:</strong> form submissions are disabled.</p>
       <div class="form__row">
         <div class="form__field">
           <label for="lead-name">Name *</label>
@@ -438,7 +439,7 @@
         <textarea id="lead-message" name="message" placeholder="Tell us about your organization and what you'd like help with."></textarea>
       </div>
       <input type="text" name="website" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="btn btn--primary" type="submit">Send Message</button>
+      <button disabled class="btn btn--primary" type="submit">Send Message</button>
       <p class="form-note">We reply within one business day, a real person, not an auto-responder.</p>
       <p class="form-status" data-form-status role="status"></p>
     </form>

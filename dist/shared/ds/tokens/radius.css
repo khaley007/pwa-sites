@@ -1,0 +1,26 @@
+/* PWA — Border Radius Tokens */
+
+:root {
+  /* ── Raw Scale ─────────────────────────────────────────────────────── */
+  --radius-none: 0px;
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-3xl:  32px;
+  --radius-full: 9999px;
+
+  /* ── Semantic Aliases ──────────────────────────────────────────────── */
+  --radius-button:  var(--radius-full);   /* pill buttons */
+  --radius-card:    var(--radius-2xl);    /* content cards */
+  --radius-input:   var(--radius-md);     /* text fields */
+  --radius-badge:   var(--radius-full);   /* status chips */
+  --radius-tag:     var(--radius-sm);     /* category tags */
+  --radius-modal:   var(--radius-2xl);    /* dialogs / sheets */
+  --radius-tooltip: var(--radius-md);     /* tooltips */
+  --radius-popover: var(--radius-xl);     /* dropdowns */
+  --radius-image:   var(--radius-xl);     /* feature images */
+  --radius-nav:     var(--radius-lg);     /* nav pills */
+}

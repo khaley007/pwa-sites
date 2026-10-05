@@ -1,0 +1,69 @@
+/* PWA — Typography Tokens */
+
+:root {
+  /* ── Font Families ─────────────────────────────────────────────────── */
+  --font-display: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans:    'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+
+  /* ── Type Scale (base 15px, Apple-aligned) ─────────────────────────── */
+  --text-2xs:  0.625rem;    /*  10px */
+  --text-xs:   0.6875rem;   /*  11px */
+  --text-sm:   0.8125rem;   /*  13px */
+  --text-base: 0.9375rem;   /*  15px — primary body */
+  --text-md:   1.0625rem;   /*  17px */
+  --text-lg:   1.1875rem;   /*  19px */
+  --text-xl:   1.3125rem;   /*  21px */
+  --text-2xl:  1.5rem;      /*  24px */
+  --text-3xl:  1.875rem;    /*  30px */
+  --text-4xl:  2.25rem;     /*  36px */
+  --text-5xl:  3rem;        /*  48px */
+  --text-6xl:  3.75rem;     /*  60px */
+  --text-7xl:  4.5rem;      /*  72px */
+  --text-8xl:  6rem;        /*  96px */
+  --text-9xl:  8rem;        /* 128px */
+
+  /* ── Font Weights ──────────────────────────────────────────────────── */
+  --weight-light:     300;
+  --weight-regular:   400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+  --weight-extrabold: 800;
+  --weight-black:     900;
+
+  /* ── Line Heights ──────────────────────────────────────────────────── */
+  --leading-none:     1;
+  --leading-tight:    1.1;
+  --leading-snug:     1.25;
+  --leading-normal:   1.5;
+  --leading-relaxed:  1.625;
+  --leading-loose:    2;
+
+  /* ── Letter Spacing ────────────────────────────────────────────────── */
+  --tracking-tighter: -0.04em;
+  --tracking-tight:   -0.02em;
+  --tracking-snug:    -0.01em;
+  --tracking-normal:   0em;
+  --tracking-wide:     0.04em;
+  --tracking-wider:    0.08em;
+  --tracking-widest:   0.16em;
+
+  /* ── Semantic Aliases ──────────────────────────────────────────────── */
+  --font-heading: var(--font-display);
+  --font-body:    var(--font-sans);
+
+  --text-display-xl: var(--text-9xl);
+  --text-display-lg: var(--text-8xl);
+  --text-display:    var(--text-7xl);
+  --text-title-lg:   var(--text-5xl);
+  --text-title:      var(--text-4xl);
+  --text-title-sm:   var(--text-3xl);
+  --text-headline:   var(--text-2xl);
+  --text-body-lg:    var(--text-md);
+  --text-body:       var(--text-base);
+  --text-body-sm:    var(--text-sm);
+  --text-label:      var(--text-sm);
+  --text-caption:    var(--text-xs);
+  --text-micro:      var(--text-2xs);
+}

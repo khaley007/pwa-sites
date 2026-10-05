@@ -1,0 +1,15 @@
+/* Pure Water Automations — Global Design System Entry Point
+   Link this single file in any consuming project. */
+
+/* fonts.css intentionally not imported — pages load Google Fonts via <link> in <head> */
+@import "./tokens/base.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/radius.css";
+@import "./tokens/shadows.css";
+@import "./tokens/motion.css";
+
+/* No-JS reveal gate: site.js adds .js to <html>; without JS, .reveal content must stay visible.
+   Sites should scope hiding as html.js .reveal { opacity: 0; ... }; this rule is the safety net. */
+html:not(.js) .reveal { opacity: 1 !important; transform: none !important; }
