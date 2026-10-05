@@ -151,6 +151,11 @@ h1, h2, h3 { font-family: var(--font-display); color: var(--color-navy-900); }
 .svc-card__icon img { width: 32px; height: 32px; }
 .svc-card h3 { font-size: 19px; font-weight: var(--weight-semibold); margin: 0 0 10px; }
 .svc-card p { font-size: 14px; color: var(--color-neutral-600); line-height: 1.7; margin: 0; }
+.trust-intro__heading { font-size: 20px; font-weight: var(--weight-semibold); margin: 20px 0 0; }
+.trust-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.trust-card { min-width: 0; background: var(--color-neutral-0); border-radius: var(--radius-2xl); padding: 28px; }
+.trust-card h3 { font-size: 19px; font-weight: var(--weight-semibold); margin: 0 0 10px; }
+.trust-card p { font-size: 14px; color: var(--color-neutral-600); line-height: 1.7; margin: 0; }
 
 /* ---------- Grants (navy) section ---------- */
 .glow {
@@ -254,9 +259,13 @@ h1, h2, h3 { font-family: var(--font-display); color: var(--color-navy-900); }
 .faq { max-width: 760px; margin: 0 auto; }
 .faq h2 { font-size: clamp(30px, 3.4vw, 42px); font-weight: var(--weight-bold); letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 36px; text-align: center; }
 .faq-list { display: flex; flex-direction: column; gap: 14px; }
-.faq-item { background: var(--color-neutral-0); border: 1px solid var(--color-neutral-200); border-radius: 18px; padding: 24px 28px; }
-.faq-item h3 { font-size: 17px; font-weight: var(--weight-semibold); margin: 0 0 8px; }
-.faq-item p { font-size: 14px; color: var(--color-neutral-700); line-height: 1.7; margin: 0; }
+.faq-item { background: var(--color-neutral-0); border: 1px solid var(--color-neutral-200); border-radius: var(--radius-xl); padding: 22px 28px; box-shadow: var(--shadow-xs); }
+.faq-item[open] { border-color: var(--color-sky-100); }
+.faq-item summary { color: var(--color-navy-900); font-size: 17px; font-weight: var(--weight-semibold); cursor: pointer; }
+.faq-item summary::marker { color: var(--color-sky-700); }
+.faq-item summary:hover { color: var(--color-sky-800); }
+.faq-item summary:focus-visible { outline: 2px solid var(--color-sky-800); outline-offset: 4px; border-radius: var(--radius-xs); }
+.faq-item p { font-size: 14px; color: var(--color-neutral-700); line-height: 1.7; margin: 12px 0 0; }
 
 /* ---------- Big CTA panel ---------- */
 .cta-panel {
@@ -299,7 +308,7 @@ h1, h2, h3 { font-family: var(--font-display); color: var(--color-navy-900); }
   background: linear-gradient(135deg, var(--color-sky-50), var(--color-navy-50));
   border-radius: 28px; pointer-events: none;
 }
-.about-photo img { position: relative; width: 100%; height: 440px; object-fit: cover; border-radius: var(--radius-2xl); display: block; }
+.about-photo img { position: relative; width: 100%; height: 440px; object-fit: contain; border-radius: var(--radius-2xl); display: block; }
 
 .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .value-card { background: var(--color-neutral-0); border: 1px solid var(--color-neutral-200); border-radius: var(--radius-xl); padding: 28px; box-shadow: var(--shadow-sm); }
@@ -308,9 +317,11 @@ h1, h2, h3 { font-family: var(--font-display); color: var(--color-navy-900); }
 
 .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .team-card { background: var(--color-neutral-0); border: 1px solid var(--color-neutral-200); border-radius: var(--radius-2xl); padding: 28px; box-shadow: var(--shadow-sm); text-align: center; }
-.team-card img { width: 148px; height: 148px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; display: block; }
+.team-card img { width: 148px; height: 148px; border-radius: var(--radius-lg); object-fit: contain; background: var(--color-neutral-50); margin: 0 auto 20px; display: block; }
+.va-team-page .team-card img { border-radius: 50%; object-fit: cover; object-position: center; }
 .team-card h3 { font-size: 20px; font-weight: var(--weight-bold); margin: 0 0 6px; }
 .team-card p { font-size: 14px; color: var(--color-neutral-600); line-height: 1.5; margin: 0; }
+.va-team-page .section-head h1.nav__badge { display: inline-flex; margin: 0 0 16px; }
 
 /* ---------- Lead form ---------- */
 .lead-form-card {
@@ -401,7 +412,10 @@ h1, h2, h3 { font-family: var(--font-display); color: var(--color-navy-900); }
   .hero { padding: 96px 20px 64px; }
   .page-hero, .about-hero { padding: 116px 20px 48px; }
   .section, .section--sm { padding: 56px 20px; }
-  .svc-grid, .price-grid, .grant-grid, .steps, .values-grid, .team-grid { grid-template-columns: 1fr; }
+  .faq h2 { margin-bottom: 28px; }
+  .faq-list { gap: 12px; }
+  .faq-item { padding: 18px 20px; }
+  .svc-grid, .price-grid, .grant-grid, .steps, .values-grid, .team-grid, .trust-grid { grid-template-columns: 1fr; }
   .refer-card { padding: 28px 24px; }
   .cta-panel { padding: 44px 24px; border-radius: var(--radius-2xl); }
   .founder-card__body { padding: 32px 24px; }
