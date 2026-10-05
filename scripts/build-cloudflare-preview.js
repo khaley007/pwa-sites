@@ -189,18 +189,12 @@ function audit() {
   for (const route of ['/go/discover','/go/quiz']) if (!redirectSet.has(route)) errors.push('missing redirect source ' + route);
   if (errors.length) throw new Error('Output audit failed:\n- ' + errors.join('\n- '));
   console.log('Validated ' + fileSet.size + ' dist files and ' + localRefs + ' local references; all resolve.');
-  console.log('Routes: / -> index.html; /nonprofit/ -> nonprofit/index.html; Ministry and Nonprofit clean routes generated.');
+  console.log('Routes: / -> index.html; /nonprofit/ -> nonprofit/index.html; clean URLs use Cloudflare Pages routing.');
   console.log('Forms: ' + forms + ' remain visible, disabled, and guarded; no /api/lead request code is present.');
   console.log('CTA redirects: /go/discover and /go/quiz verified.');
 }
 function redirects() {
-  const lines = ['/go/discover https://team.purewaterautomations.com/discover 302','/go/quiz https://purewaterautomations.getformly.app/tcndHU 302','/index.html / 301','/nonprofit /nonprofit/ 301','/nonprofit/index.html /nonprofit/ 301'];
-  for (const group of [{dir:dist,prefix:''},{dir:path.join(dist,'nonprofit'),prefix:'/nonprofit'}]) {
-    for (const file of fs.readdirSync(group.dir).filter((f) => f.toLowerCase().endsWith('.html') && f.toLowerCase() !== 'index.html')) {
-      const route = group.prefix + '/' + file.replace(/\.html$/i, '');
-      lines.push(route + '.html ' + route + ' 301', route + ' ' + route + '.html 200', route + '/ ' + route + ' 301');
-    }
-  }
+  const lines = ['/go/discover https://team.purewaterautomations.com/discover 302','/go/quiz https://purewaterautomations.getformly.app/tcndHU 302'];
   fs.writeFileSync(path.join(dist, '_redirects'), lines.join('\n') + '\n', 'utf8');
 }
 function build() {
