@@ -497,6 +497,8 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 .contact-line a { font-weight: 600; }
 .contact-socials { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
 .contact-socials a { font-family: var(--font-sans); font-size: 14px; color: var(--color-sky-700); }
+.contact-socials a[aria-label="X (opens in a new tab)"] { display: inline-flex; align-items: center; justify-content: center; line-height: 1; vertical-align: middle; }
+.contact-socials a[aria-label="X (opens in a new tab)"] svg { display: block; }
 
 /* ── Footer ───────────────────────────────────────────────────────── */
 .footer { background: var(--color-navy-900); padding: 72px 48px 40px; }
@@ -520,6 +522,8 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 .footer-social, .footer-legal { display: flex; gap: 20px; }
 .footer-social a, .footer-legal a { font-family: var(--font-sans); font-size: 13px; color: rgba(255, 255, 255, 0.55); }
 .footer-social a:hover, .footer-legal a:hover { color: var(--color-sky-400); }
+.footer-social a[aria-label="X (opens in a new tab)"] { display: inline-flex; align-items: center; justify-content: center; line-height: 1; vertical-align: middle; }
+.footer-social a[aria-label="X (opens in a new tab)"] svg { display: block; }
 
 /* ── Reveal animation ─────────────────────────────────────────────── */
 html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity var(--duration-slower) var(--ease-out), transform var(--duration-slower) var(--ease-out); }
