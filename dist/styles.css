@@ -97,6 +97,7 @@ img { max-width: 100%; }
 .section-head h2 { margin: 16px 0 14px; }
 .section-head h2:first-child { margin-top: 0; }
 .section-sub { font-family: var(--font-sans); font-size: 17px; color: var(--color-neutral-600); max-width: 560px; margin: 0 auto; line-height: 1.6; }
+.section-sub--faq { max-width: 760px; }
 
 h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); color: var(--color-navy-900); }
 .h-display { font-size: clamp(34px, 3.8vw, 48px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
@@ -187,6 +188,7 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 
 .services-grid .card {
   grid-column: span 4;
+  background: var(--color-neutral-50);
 }
 
 .services-grid .card:nth-child(n + 4) {
@@ -233,12 +235,30 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 .photo-frame img { position: relative; width: 100%; height: 400px; object-fit: cover; border-radius: 24px; display: block; }
 .photo-frame--tall img { height: 440px; }
 
+.client-testimonials { padding: 96px 48px; }
+.client-testimonials__list { display: grid; gap: 24px; }
+.client-testimonial {
+  display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 32px; align-items: center;
+  padding: 24px; background: var(--color-neutral-0); border: 1px solid var(--color-sky-100); border-radius: 24px;
+}
+.client-testimonial--reverse { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
+.client-testimonial--reverse .client-testimonial__image { grid-column: 2; grid-row: 1; }
+.client-testimonial--reverse .client-testimonial__content { grid-column: 1; grid-row: 1; }
+.client-testimonial__image { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 16px; }
+.client-testimonial--reverse .client-testimonial__content { align-self: start; }
+.client-testimonial__content { min-width: 0; }
+.client-testimonial__quote { margin: 0 0 20px; }
+.client-testimonial__quote p { margin: 0; color: var(--color-navy-900); font-family: var(--font-sans); font-size: 18px; line-height: 1.65; }
+.client-testimonial__attribution { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-sans); font-size: 15px; line-height: 1.5; }
+.client-testimonial__attribution strong { color: var(--color-navy-900); font-size: 16px; }
+.client-testimonial__attribution span { color: var(--color-neutral-600); }
+
 .sayaka-photo { margin: 0; }
 .sayaka-photo img { height: auto; aspect-ratio: auto; object-fit: contain; }
 .sayaka-label {
   position: absolute;
   z-index: 2;
-  top: 6%;
+  top: 19%;
   left: 82%;
   transform: translateX(-50%);
   padding: 6px 12px;
@@ -266,6 +286,14 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55));
 }
 .sayaka-arrow path { vector-effect: non-scaling-stroke; }
+
+@media (min-width: 1025px) {
+  .service-card--calendar {
+    grid-column: 1 / -1;
+    width: calc((100% - 20px) / 2);
+    justify-self: center;
+  }
+}
 
 /* ── Founder video card ───────────────────────────────────────────── */
 .founder-card {
@@ -356,7 +384,7 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 /* ── Steps ────────────────────────────────────────────────────────── */
 .step { background: var(--color-neutral-50); border-radius: 24px; padding: 28px; }
 .step--white {
-  background: var(--color-neutral-0);
+  background: var(--color-neutral-50);
   border: 1px solid var(--color-neutral-200);
   box-shadow: 0 4px 16px rgba(19, 34, 114, 0.06);
 }
@@ -366,7 +394,8 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 
 /* ── FAQ ──────────────────────────────────────────────────────────── */
 .faq-list { display: flex; flex-direction: column; gap: 14px; }
-.faq-item { background: var(--color-neutral-0); border: 1px solid var(--color-neutral-200); border-radius: 18px; padding: 26px 30px; }
+.faq-item { background: var(--color-neutral-50); border: 1px solid var(--color-neutral-200); border-radius: 18px; padding: 26px 30px; }
+.faq-list--pricing .faq-item { background: var(--color-neutral-0); }
 .faq-q { font-family: var(--font-display); font-size: 17px; font-weight: 600; color: var(--color-navy-900); margin: 0 0 10px; }
 .faq-a { font-family: var(--font-sans); font-size: 14px; color: var(--color-neutral-700); line-height: 1.75; margin: 0 0 10px; }
 .faq-a:last-child { margin-bottom: 0; }
@@ -445,6 +474,7 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 }
 .quote-box h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 14px; }
 .quote-box p { font-family: var(--font-sans); font-size: 15px; color: var(--color-neutral-700); line-height: 1.75; margin: 0 0 24px; }
+.quote-box p:last-child { margin-bottom: 0; }
 .quote-box strong { color: var(--color-navy-900); }
 
 /* ── Navy statement band ──────────────────────────────────────────── */
@@ -516,6 +546,11 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 .footer-contact .btn {
   display: inline-flex;
   width: fit-content;
+}
+.footer-contact > a.btn--secondary,
+.footer-contact > a.btn--secondary:hover,
+.footer-contact > a.btn--secondary:focus-visible {
+  color: var(--color-navy-900);
 }
 .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px; }
 .footer-copy { font-family: var(--font-sans); font-size: 13px; color: rgba(255, 255, 255, 0.6); }
@@ -597,6 +632,9 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   .footer-grid { grid-template-columns: 1fr; gap: 36px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
   .founder-body { padding: 32px 24px; }
+  .client-testimonial, .client-testimonial--reverse { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 20px; }
+  .client-testimonial--reverse .client-testimonial__image, .client-testimonial--reverse .client-testimonial__content { grid-column: 1; grid-row: auto; }
+  .client-testimonial__image { aspect-ratio: 16 / 9; }
   .cta-band { padding: 48px 24px; }
   .quote-box { padding: 32px 24px; }
   .info-bar { padding: 20px 24px; }
