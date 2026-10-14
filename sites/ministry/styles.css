@@ -399,6 +399,7 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 .faq-list { display: flex; flex-direction: column; gap: 14px; }
 .faq-item { background: var(--color-neutral-50); border: 1px solid var(--color-neutral-200); border-radius: 18px; padding: 26px 30px; }
 .faq-list--pricing .faq-item { background: var(--color-neutral-0); }
+.faq-list--bookkeeping .faq-item { background: var(--color-neutral-0); }
 .faq-q { font-family: var(--font-display); font-size: 17px; font-weight: 600; color: var(--color-navy-900); margin: 0 0 10px; }
 .faq-a { font-family: var(--font-sans); font-size: 14px; color: var(--color-neutral-700); line-height: 1.75; margin: 0 0 10px; }
 .faq-a:last-child { margin-bottom: 0; }
@@ -622,7 +623,8 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   grid-template-columns: 1fr;
 }
 
-.services-grid .card {
+.services-grid .card,
+.services-grid .card:nth-child(n + 4) {
   grid-column: span 1;
 }
   .model-table, .model-table thead, .model-table tbody, .model-row, .model-head, .model-cell { display: block; }
