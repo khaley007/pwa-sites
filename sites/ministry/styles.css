@@ -594,10 +594,11 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 
   .grid--3, .grid--4 { grid-template-columns: repeat(2, 1fr); }
   .services-grid {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.services-grid .card {
+.services-grid .card,
+.services-grid .card:nth-child(n + 4) {
   grid-column: span 1;
 }
   .grid--5 { grid-template-columns: repeat(2, 1fr); }
@@ -646,4 +647,11 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   .stat-num { font-size: 52px; }
   .photo-frame::before { inset: 16px -12px -12px 16px; }
   .btn--lg, .btn--hero-ghost { white-space: normal; height: auto; min-height: 52px; padding-top: 10px; padding-bottom: 10px; text-align: center; }
+}
+
+/* Homepage tablet framing: Justin founder photo and Hak Ja Han Moon photo (769px to 1024px only) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .founder-media { aspect-ratio: 16 / 10; }
+  .founder-media > img { object-position: center 30%; }
+  .photo-frame.photo-frame--home-moon img { height: auto; aspect-ratio: 16 / 10; object-position: center top; }
 }
