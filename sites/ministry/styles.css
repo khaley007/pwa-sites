@@ -146,9 +146,8 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 
 /* Trusted By logo strip */
 .trusted-by {
-  --logo-slot-width: 180px;
-  --logo-slot-height: 88px;
-  --logo-gap: 24px;
+  --logo-unit: 1;
+  --logo-gap: clamp(48px, 6vw, 96px);
   padding: 40px 48px;
 }
 .trusted-by + .section--tight {
@@ -165,14 +164,17 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
   display: flex; flex: 0 0 auto; gap: var(--logo-gap);
   padding-right: var(--logo-gap);
 }
-.trusted-by-slot {
-  box-sizing: border-box; flex: 0 0 var(--logo-slot-width);
-  width: var(--logo-slot-width); height: var(--logo-slot-height); padding: 16px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--color-neutral-50); border: 1px solid var(--color-neutral-200); border-radius: 12px;
-  font-family: var(--font-sans); font-size: 14px; color: var(--color-neutral-600);
-}
-.trusted-by-slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.trusted-by-slot { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
+.trusted-by-logo { display: block; width: auto; max-width: none; object-fit: contain; }
+/* Per-logo heights balance perceived size; boxes include each file's transparent margins */
+.trusted-by-logo--montrel   { height: calc(93px * var(--logo-unit)); }
+.trusted-by-logo--beulah    { height: calc(114px * var(--logo-unit)); }
+.trusted-by-logo--smi       { height: calc(84px * var(--logo-unit)); }
+.trusted-by-logo--ffwpu-na  { height: calc(64px * var(--logo-unit)); }
+.trusted-by-logo--ffwpu-ne  { height: calc(70px * var(--logo-unit)); }
+.trusted-by-logo--belvedere { height: calc(71px * var(--logo-unit)); }
+.trusted-by-logo--chicago   { height: calc(60px * var(--logo-unit)); }
+.trusted-by-logo--dfw       { height: calc(64px * var(--logo-unit)); }
 @keyframes ministry-logo-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -571,12 +573,12 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   .trusted-by-track { animation: none; transform: none; width: 100%; }
   .trusted-by-group { flex: 1 1 auto; min-width: 0; flex-wrap: wrap; justify-content: center; padding-right: 0; }
   .trusted-by-group[aria-hidden="true"] { display: none; }
-  .trusted-by-slot { max-width: 100%; }
+  .trusted-by-logo { max-width: 100%; }
 }
 
 /* ── Responsive ───────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .trusted-by { --logo-slot-width: 160px; --logo-slot-height: 80px; --logo-gap: 20px; }
+  .trusted-by { --logo-unit: 0.85; }
   .site-nav { padding: 0 24px; }
   .nav-toggle { display: block; }
   .nav-menu {
@@ -607,7 +609,7 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 }
 
 @media (max-width: 768px) {
-  .trusted-by { --logo-slot-width: 140px; --logo-slot-height: 72px; --logo-gap: 16px; padding: 32px 20px; }
+  .trusted-by { --logo-unit: 0.7; padding: 32px 20px; }
   .section, .section--tight, .section--88, .section--tint, .statement { padding-left: 20px; padding-right: 20px; }
   .section { padding-top: 72px; padding-bottom: 72px; }
   .hero { padding: 96px 20px 72px; }
