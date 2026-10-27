@@ -197,6 +197,10 @@ function redirects() {
   const lines = ['/go/discover https://team.purewaterautomations.com/discover 302','/go/quiz https://purewaterautomations.getformly.app/tcndHU 302'];
   fs.writeFileSync(path.join(dist, '_redirects'), lines.join('\n') + '\n', 'utf8');
 }
+function headers() {
+  const lines = ['https://pwa-sites.pages.dev/*','  X-Robots-Tag: noindex'];
+  fs.writeFileSync(path.join(dist, '_headers'), lines.join('\n') + '\n', 'utf8');
+}
 function build() {
   if (fs.existsSync(dist)) fs.rmSync(dist, { recursive: true, force: true });
   fs.mkdirSync(dist, { recursive: true });
@@ -219,6 +223,7 @@ function build() {
   }
   if (forms !== 4) throw new Error('Expected four forms, found ' + forms);
   redirects();
+  headers();
   audit();
 }
 build();
