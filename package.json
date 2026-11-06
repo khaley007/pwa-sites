@@ -2,6 +2,6 @@
   "name": "pwa-sites",
   "private": true,
   "version": "1.0.0",
-  "description": "PWA audience marketing sites: ministry + nonprofits subdomains. Zero-dependency Node server.",
+  "description": "PWA audience marketing sites: Ministry site (Nonprofit removed; nonprofits hostname transition pending). Zero-dependency Node server.",
   "scripts": { "start": "node server.js" }
 }

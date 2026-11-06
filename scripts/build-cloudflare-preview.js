@@ -4,7 +4,6 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const dist = path.resolve(root, 'dist');
 const ministry = path.join(root, 'sites', 'ministry');
-const nonprofit = path.join(root, 'sites', 'nonprofit');
 const shared = path.join(root, 'shared');
 const origin = 'https://preview.invalid';
 if (path.dirname(dist) !== root || path.basename(dist) !== 'dist') throw new Error('Unsafe dist path.');
@@ -24,29 +23,6 @@ function copyContents(source, dest) {
       filter: (candidate) => allowed(source, candidate),
     });
   }
-}
-function prefixNonprofitUrl(value) {
-  const m = value.match(/^([^?#]*)(.*)$/);
-  const pathname = m ? m[1] : value;
-  const suffix = m ? m[2] : '';
-  if (!pathname.startsWith('/') || pathname.startsWith('//')) return value;
-  if (pathname === '/') return '/nonprofit/' + suffix;
-  if (pathname === '/nonprofit' || pathname.startsWith('/nonprofit/')) return value;
-  if (pathname === '/shared' || pathname.startsWith('/shared/')) return value;
-  if (pathname === '/go' || pathname.startsWith('/go/')) return value;
-  return '/nonprofit' + pathname + suffix;
-}
-function rewriteNonprofitHtml(html) {
-  html = html.replace(/\b(href|src|action|poster|data-src|data-href)\s*=\s*(["'])(.*?)\2/gi,
-    (whole, attr, quote, value) => value.startsWith('/') ? attr + '=' + quote + prefixNonprofitUrl(value) + quote : whole);
-  return html.replace(/\bsrcset\s*=\s*(["'])(.*?)\1/gi, (whole, quote, value) => {
-    const rewritten = value.split(',').map((item) => {
-      const parts = item.trim().split(/\s+/, 2);
-      parts[0] = prefixNonprofitUrl(parts[0]);
-      return parts.join(' ');
-    }).join(', ');
-    return 'srcset=' + quote + rewritten + quote;
-  });
 }
 function addFormNotice(html, label) {
   let count = 0;
@@ -103,7 +79,6 @@ function writeShared() {
 function servedPageUrl(relative) {
   const p = '/' + relative.split(path.sep).join('/');
   if (p === '/index.html') return '/';
-  if (p === '/nonprofit/index.html') return '/nonprofit/';
   return p.replace(/\.html$/i, '');
 }
 function fileForUrl(pathname, fileSet) {
@@ -177,19 +152,20 @@ function audit() {
     const text = fs.readFileSync(path.join(dist, relative), 'utf8');
     if (relative.endsWith('.js') && (text.includes('/api/lead') || /\bfetch\s*\(/.test(text))) errors.push(relative + ' contains an API/network submit path');
   }
-  const required = ['index.html','nonprofit/index.html','styles.css','nonprofit/styles.css','shared/assets/favicon.png','shared/assets/og-card.png','shared/assets/logo/pwa-logo-full-color-transparent.png','shared/ds/styles.css','shared/ds/tokens/base.css','shared/js/site.js'];
+  const required = ['index.html','styles.css','shared/assets/favicon.png','shared/assets/og-card.png','shared/assets/logo/pwa-logo-full-color-transparent.png','shared/ds/styles.css','shared/ds/tokens/base.css','shared/js/site.js'];
   for (const p of required) if (!fileSet.has(p)) errors.push('required file missing: ' + p);
   for (const p of paths) {
     if (/(^|\/)(?:server\.js|node_modules|\.git|data|deploy|design-src|project-docs|reviews)(?:\/|$)/i.test(p)
       || /(^|\/)\.env(?:\.|$)/i.test(p)
       || /(?:credential|secret|private[-_]?key|\.(?:pem|key|p12|pfx)$)/i.test(p)) errors.push('forbidden file included: ' + p);
   }
-  if (!fileSet.has('services.html') || !fileSet.has('nonprofit/services.html')) errors.push('Ministry or Nonprofit services clean-route file is missing');
-  if (forms !== 4) errors.push('expected four preview forms, found ' + forms);
+  if (!fileSet.has('services.html')) errors.push('Ministry services clean-route file is missing');
+  if (paths.some((p) => /^nonprofit(?:\/|$)/i.test(p)) || fs.existsSync(path.join(dist, 'nonprofit'))) errors.push('Nonprofit output must not be present in dist');
+  if (forms !== 2) errors.push('expected two preview forms, found ' + forms);
   for (const route of ['/go/discover','/go/quiz']) if (!redirectSet.has(route)) errors.push('missing redirect source ' + route);
   if (errors.length) throw new Error('Output audit failed:\n- ' + errors.join('\n- '));
   console.log('Validated ' + fileSet.size + ' dist files and ' + localRefs + ' local references; all resolve.');
-  console.log('Routes: / -> index.html; /nonprofit/ -> nonprofit/index.html; clean URLs use Cloudflare Pages routing.');
+  console.log('Routes: / -> index.html (Ministry only); clean URLs use Cloudflare Pages routing.');
   console.log('Forms: ' + forms + ' remain visible, disabled, and guarded; no /api/lead request code is present.');
   console.log('CTA redirects: /go/discover and /go/quiz verified.');
 }
@@ -205,23 +181,21 @@ function build() {
   if (fs.existsSync(dist)) fs.rmSync(dist, { recursive: true, force: true });
   fs.mkdirSync(dist, { recursive: true });
   copyContents(ministry, dist);
-  copyContents(nonprofit, path.join(dist, 'nonprofit'));
   copyContents(path.join(shared, 'assets'), path.join(dist, 'shared', 'assets'));
   writeShared();
   let forms = 0;
   for (const htmlPath of walk(dist).filter((p) => p.toLowerCase().endsWith('.html'))) {
     const relative = path.relative(dist, htmlPath).split(path.sep).join('/');
     let html = fs.readFileSync(htmlPath, 'utf8');
-    if (relative.startsWith('nonprofit/')) html = rewriteNonprofitHtml(html);
     const result = addFormNotice(html, relative);
     forms += result.count;
     fs.writeFileSync(htmlPath, result.html, 'utf8');
   }
-  for (const css of [path.join(dist,'styles.css'),path.join(dist,'nonprofit','styles.css')]) {
+  for (const css of [path.join(dist,'styles.css')]) {
     if (!fs.existsSync(css)) throw new Error('Missing site stylesheet ' + css);
     fs.appendFileSync(css, '\n.preview-form-notice { margin: 0 0 1rem; padding: .75rem 1rem; border: 2px solid #b45309; border-radius: .5rem; background: #fff7ed; color: #7c2d12; font-size: .95rem; }\n', 'utf8');
   }
-  if (forms !== 4) throw new Error('Expected four forms, found ' + forms);
+  if (forms !== 2) throw new Error('Expected two forms, found ' + forms);
   redirects();
   headers();
   audit();

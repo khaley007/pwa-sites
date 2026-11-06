@@ -8,7 +8,7 @@ This handover starts from the `khaley007/pwa-sites` branch `redesign/pwa-website
 
 The repository serves static marketing sites. Ministry pages use the shared design system under `shared/ds/` and shared assets under `shared/assets/`. Preserve the existing route behavior, forms, `/api/lead`, navigation, accessibility, and working interactions while making scoped changes.
 
-Current website redesign work targets Ministry. Separately, dependency-aware Nonprofit removal has been requested. Before implementing removal, inspect affected routes, shared dependencies, and references to identify what would break. Do not change owner production hostnames or deployment behavior as part of that work without explicit resolution and authorization.
+Current website redesign work targets Ministry. Nonprofit has since been removed from the repository and Cloudflare preview; the production hostname transition remains unresolved (see `AGENTS.md`). Do not change owner production hostnames or deployment behavior as part of that work without explicit resolution and authorization.
 
 ## Source access and content
 
@@ -23,7 +23,7 @@ Evaluation and integration of Max's Site Review Kit is planned for review builds
 ## Next tasks
 
 1. Confirm access to approved source materials and the private WIP implementation before any blog work.
-2. Inspect the Ministry architecture and shared dependencies for the scoped redesign; separately map dependencies before any Nonprofit removal.
+2. Inspect the Ministry architecture and shared dependencies for the scoped redesign. Nonprofit repository removal is complete; the production hostname transition is pending.
 3. Evaluate the Site Review Kit, including backend and release-output boundaries, before integration.
 4. Make narrow changes and run relevant checks. Report what changed, what was checked, and any unresolved decisions concisely.
 

@@ -1,16 +1,14 @@
 # pwa-sites — Build Spec (production conversion of design-canvas artboards)
 
-Two static marketing sites, one repo, one zero-dep Node server (`server.js`, already built).
+One static marketing site (Ministry; Nonprofit removed, see `AGENTS.md`), one repo, one zero-dep Node server (`server.js`, already built).
 
 | Site | Audience | Prod host | Source artboards | Copy doc |
 |---|---|---|---|---|
 | `sites/ministry` | FFWPU / Family Fed pastors, Tribal Messiahs | ministry.purewaterautomations.com | `design-src/ministry/*.dc.html` | `design-src/church-bookkeeping-landing-page-copy.md` |
-| `sites/nonprofit` | Small nonprofits | nonprofits.purewaterautomations.com | `design-src/nonprofit/*.dc.html` | `design-src/npo-landing-page-copy.md` |
 
 ## Pages
 
 **ministry/**: `index.html` (Ministry Home), `services.html`, `pricing.html`, `church-bookkeeping.html`, `our-heart.html`, `contact.html` (new — lead form).
-**nonprofit/**: `index.html`, `services.html`, `pricing.html`, `about.html`, `contact.html` (new — lead form).
 
 Internal links use clean URLs (`/services`, `/pricing`, `/contact` …). The server maps `/services` → `services.html`. Home is `/`.
 
@@ -27,7 +25,7 @@ Internal links use clean URLs (`/services`, `/pricing`, `/contact` …). The ser
 8. **Accessibility**: one `<h1>` per page, semantic landmarks (`header/nav/main/footer`), real alt text on meaningful images (empty alt on decorative), visible focus states, skip-to-content link, color contrast AA (watch light-sky text on white).
 9. **SEO head per page**: unique `<title>` (≤60 chars, keyword-led), meta description (≤155 chars), canonical URL (prod host), Open Graph + Twitter card tags (og:image `/shared/assets/logo.png` until a real card exists), `lang="en"`.
    JSON-LD: `Organization` + `ProfessionalService` on home; `FAQPage` where a page has FAQ content; `BreadcrumbList` on subpages.
-   Keyword targets — ministry: church bookkeeping, virtual assistant for churches, ministry admin support, FFWPU community terms where natural. Nonprofit: virtual assistant for nonprofits, nonprofit admin support, Google Ad Grant management, nonprofit bookkeeping.
+   Keyword targets — ministry: church bookkeeping, virtual assistant for churches, ministry admin support, FFWPU community terms where natural.
 10. **Copy docs are canonical for wording** where they overlap artboards (they are newer drafts). Bracketed `[placeholder]` items in the copy docs: OMIT — never publish placeholder stats, testimonials, or quotes. No invented numbers or testimonials anywhere.
 11. **Lead form** (`contact.html` + a short form section near the bottom of `index.html`): fields name*, email*, organization, phone (optional), interest (select), message; hidden `website` honeypot input (`style="position:absolute;left:-9999px"`, `tabindex="-1"`, `autocomplete="off"`); `<form data-lead-form>`, a `<p data-form-status role="status">`, submit posts JSON to `/api/lead` via `/shared/js/site.js` (already built — just include `<script src="/shared/js/site.js" defer>`). Keep the external "Book a Free Assessment" (`https://team.purewaterautomations.com/discover`) CTA as the primary conversion path; the form is the low-friction alternative.
 12. **Per-site extras**: `robots.txt` (allow all + sitemap line), `sitemap.xml` (absolute prod URLs), favicon links to `/shared/assets/logo.png`.
@@ -36,6 +34,6 @@ Internal links use clean URLs (`/services`, `/pricing`, `/contact` …). The ser
 
 ## Verify before finishing
 
-- Every page loads via `node server.js` (port 8811): `/ministry/`, `/ministry/services`, … `/nonprofit/contact` all 200.
+- Every page loads via `node server.js` (port 8811): `/ministry/`, `/ministry/services`, … `/ministry/contact` all 200.
 - No references to `.dc.html`, `support.js`, `image-slot.js`, `_ds_bundle.js`, or `x-dc`/`dc-import`/`x-import` tags remain.
 - All internal links resolve; all asset paths exist on disk.

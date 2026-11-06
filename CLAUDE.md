@@ -5,7 +5,7 @@ Use `docs/claude-handover.md` as the starting context for this handover. Read re
 ## Project boundaries
 
 - The sites use static HTML and CSS. Ministry pages reuse the shared design system in `shared/ds/` and assets in `shared/assets/`.
-- Current redesign work targets Ministry. Nonprofit removal is separately requested; map and inspect dependencies before making that change.
+- Current redesign work targets Ministry. Nonprofit has been removed from the repository and preview; the production `nonprofits.` hostname transition is unresolved (see `AGENTS.md`). Do not deploy until it is resolved.
 - Preserve existing routes, navigation, forms, `/api/lead`, shared assets, accessibility, and working behavior unless an approved task requires a change.
 - Make narrow changes, avoid unrelated edits, and report concise milestones and checks performed.
 - Run only checks relevant to the change. Do not push, deploy, or change owner production settings without explicit authorization.

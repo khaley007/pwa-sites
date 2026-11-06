@@ -1,8 +1,9 @@
 // PWA audience sites — zero-dependency static host + lead-capture API.
 // Node >= 22.5 (node:sqlite). Routes by Host header:
 //   ministry.purewaterautomations.com   -> sites/ministry
-//   nonprofits.purewaterautomations.com -> sites/nonprofit
-// Local dev: http://localhost:PORT/ministry/... and /nonprofit/... also work.
+// Local dev: http://localhost:PORT/ministry/... also works.
+// Nonprofit site removed; the nonprofits. hostname transition is unresolved
+// (see AGENTS.md). Do not release this to production until it is resolved.
 // Sits behind Caddy in production; binds loopback only.
 
 const http = require('node:http');
@@ -52,7 +53,6 @@ const GO = {
 
 const HOSTS = {
   'ministry.purewaterautomations.com': 'ministry',
-  'nonprofits.purewaterautomations.com': 'nonprofit',
 };
 
 const MIME = {
@@ -239,7 +239,7 @@ function handleRequest(req, res) {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   const host = (req.headers.host || '').split(':')[0].toLowerCase();
   let site = HOSTS[host] || null;
-  let prefix = ''; // '/ministry' | '/nonprofit' in local-dev prefix mode
+  let prefix = ''; // '/ministry' in local-dev prefix mode
   let urlPath;
   let query = '';
   try {
@@ -252,7 +252,7 @@ function handleRequest(req, res) {
 
   // Local-dev prefix routing when host is not a known vhost.
   if (!site) {
-    const m = urlPath.match(/^\/(ministry|nonprofit)(\/.*)?$/);
+    const m = urlPath.match(/^\/(ministry)(\/.*)?$/);
     if (m) { site = m[1]; prefix = `/${m[1]}`; urlPath = m[2] || '/'; }
   }
 

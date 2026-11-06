@@ -7,6 +7,8 @@ ministry.purewaterautomations.com {
 	reverse_proxy 127.0.0.1:8811
 }
 
+# PENDING: Nonprofit site removed from the repo; retire/redirect decision unresolved (see AGENTS.md).
+# Do not deploy the current server.js until this vhost's transition is resolved.
 nonprofits.purewaterautomations.com {
 	encode zstd gzip
 	header Strict-Transport-Security "max-age=31536000"
