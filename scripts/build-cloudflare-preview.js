@@ -5,6 +5,10 @@ const root = path.resolve(__dirname, '..');
 const dist = path.resolve(root, 'dist');
 const ministry = path.join(root, 'sites', 'ministry');
 const shared = path.join(root, 'shared');
+// Site Review Kit (review builds only): vendored client, injected into preview HTML.
+const reviewKit = path.join(root, 'vendor', 'site-review-kit');
+const reviewFiles = ['review.js', 'review.css'];
+const reviewTag = '<script src="/review/review.js" data-api="/api" data-team="Pure Water Automations" data-reveal=".reveal:is-visible" defer></script>';
 const origin = 'https://preview.invalid';
 if (path.dirname(dist) !== root || path.basename(dist) !== 'dist') throw new Error('Unsafe dist path.');
 const excludedDir = /^(?:\.git|node_modules|data|deploy|design-src|project-docs|reviews)$/i;
@@ -105,6 +109,21 @@ function checkReference(raw, pageUrl, source, fileSet, htmlMap, redirectSet, err
     if (!ids.includes(decodeURIComponent(u.hash.slice(1)))) errors.push(source + ' -> ' + u.pathname + u.hash + ' has no matching anchor');
   }
 }
+function copyReviewKit() {
+  const out = path.join(dist, 'review');
+  fs.mkdirSync(out, { recursive: true });
+  for (const name of reviewFiles) {
+    const from = path.join(reviewKit, name);
+    if (!fs.existsSync(from)) throw new Error('Missing Site Review Kit file: ' + from);
+    fs.copyFileSync(from, path.join(out, name));
+  }
+}
+function addReviewTag(html, label) {
+  if (html.includes('/review/review.js')) throw new Error(label + ' already references the review script');
+  const at = html.toLowerCase().lastIndexOf('</body>');
+  if (at === -1) throw new Error(label + ' has no </body> for the review script');
+  return html.slice(0, at) + reviewTag + '\n' + html.slice(at);
+}
 function audit() {
   const paths = walk(dist).map((p) => path.relative(dist, p).split(path.sep).join('/'));
   const fileSet = new Set(paths);
@@ -150,7 +169,9 @@ function audit() {
   }
   for (const relative of paths.filter((p) => /\.(?:html|css|js)$/i.test(p))) {
     const text = fs.readFileSync(path.join(dist, relative), 'utf8');
-    if (relative.endsWith('.js') && (text.includes('/api/lead') || /\bfetch\s*\(/.test(text))) errors.push(relative + ' contains an API/network submit path');
+    if (relative.endsWith('.js') && text.includes('/api/lead')) errors.push(relative + ' contains an /api/lead path');
+    // The vendored review client is the only script allowed to make network requests (to the review /api only).
+    if (relative.endsWith('.js') && relative !== 'review/review.js' && /\bfetch\s*\(/.test(text)) errors.push(relative + ' contains an API/network submit path');
   }
   const required = ['index.html','styles.css','shared/assets/favicon.png','shared/assets/og-card.png','shared/assets/logo/pwa-logo-full-color-transparent.png','shared/ds/styles.css','shared/ds/tokens/base.css','shared/js/site.js'];
   for (const p of required) if (!fileSet.has(p)) errors.push('required file missing: ' + p);
@@ -162,12 +183,25 @@ function audit() {
   if (!fileSet.has('services.html')) errors.push('Ministry services clean-route file is missing');
   if (paths.some((p) => /^nonprofit(?:\/|$)/i.test(p)) || fs.existsSync(path.join(dist, 'nonprofit'))) errors.push('Nonprofit output must not be present in dist');
   if (forms !== 2) errors.push('expected two preview forms, found ' + forms);
+  for (const name of reviewFiles) {
+    const out = path.join(dist, 'review', name);
+    if (!fs.existsSync(out)) errors.push('review file missing: review/' + name);
+    else if (!fs.readFileSync(out).equals(fs.readFileSync(path.join(reviewKit, name)))) errors.push('review/' + name + ' differs from vendor copy');
+  }
+  if (paths.some((p) => p.startsWith('review/') && !reviewFiles.includes(p.slice('review/'.length)))) errors.push('unexpected file under review/');
+  for (const [relative, html] of htmlMap) {
+    const tags = html.split(reviewTag).length - 1;
+    const refs = (html.match(/\/review\/review\.js/g) || []).length;
+    if (tags !== 1 || refs !== 1) errors.push(relative + ' must contain exactly one review script tag, found ' + refs);
+    else if (html.indexOf(reviewTag) > html.toLowerCase().lastIndexOf('</body>')) errors.push(relative + ' review script tag is not inside <body>');
+  }
   for (const route of ['/go/discover','/go/quiz']) if (!redirectSet.has(route)) errors.push('missing redirect source ' + route);
   if (errors.length) throw new Error('Output audit failed:\n- ' + errors.join('\n- '));
   console.log('Validated ' + fileSet.size + ' dist files and ' + localRefs + ' local references; all resolve.');
   console.log('Routes: / -> index.html (Ministry only); clean URLs use Cloudflare Pages routing.');
   console.log('Forms: ' + forms + ' remain visible, disabled, and guarded; no /api/lead request code is present.');
   console.log('CTA redirects: /go/discover and /go/quiz verified.');
+  console.log('Review kit: review/review.js and review/review.css match vendor copy; ' + htmlMap.size + ' pages carry one review script tag each.');
 }
 function redirects() {
   const lines = ['/go/discover https://team.purewaterautomations.com/discover 302','/go/quiz https://purewaterautomations.getformly.app/tcndHU 302'];
@@ -183,13 +217,14 @@ function build() {
   copyContents(ministry, dist);
   copyContents(path.join(shared, 'assets'), path.join(dist, 'shared', 'assets'));
   writeShared();
+  copyReviewKit();
   let forms = 0;
   for (const htmlPath of walk(dist).filter((p) => p.toLowerCase().endsWith('.html'))) {
     const relative = path.relative(dist, htmlPath).split(path.sep).join('/');
     let html = fs.readFileSync(htmlPath, 'utf8');
     const result = addFormNotice(html, relative);
     forms += result.count;
-    fs.writeFileSync(htmlPath, result.html, 'utf8');
+    fs.writeFileSync(htmlPath, addReviewTag(result.html, relative), 'utf8');
   }
   for (const css of [path.join(dist,'styles.css')]) {
     if (!fs.existsSync(css)) throw new Error('Missing site stylesheet ' + css);

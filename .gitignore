@@ -5,3 +5,8 @@ project-docs/
 CLAUDE.md
 PWA_WEB_REDESIGN_PROJECT_PLAN.txt
 /dist/
+
+# Site Review Kit / Cloudflare local dev (never commit)
+.dev.vars
+.dev.vars.*
+.wrangler/
