@@ -69,6 +69,7 @@ const MIME = {
   '.txt': 'text/plain; charset=utf-8',
   '.xml': 'application/xml; charset=utf-8',
   '.woff2': 'font/woff2',
+  '.mp4': 'video/mp4',
 };
 
 // Validate the optional Email Core config once at startup.
@@ -98,9 +99,60 @@ function isPathWithin(parent, candidate) {
   return rel !== '' && !rel.startsWith('..') && !path.isAbsolute(rel);
 }
 
-function serveFile(req, res, filePath) {
-  fs.stat(filePath, (err, st) => {
+// Single byte range only. Returns {start, end}, -1 for unsatisfiable (416),
+// or null to ignore the header (missing, malformed or multi-range: full 200).
+function parseRange(header, size) {
+  if (!header) return null;
+  const m = /^bytes=(\d*)-(\d*)$/.exec(String(header).trim());
+  if (!m || (m[1] === '' && m[2] === '')) return null;
+  let start;
+  let end;
+  if (m[1] === '') {
+    const suffix = Number(m[2]);
+    if (!Number.isSafeInteger(suffix)) return null;
+    if (suffix === 0 || size === 0) return -1;
+    start = Math.max(0, size - suffix);
+    end = size - 1;
+  } else {
+    start = Number(m[1]);
+    end = m[2] === '' ? size - 1 : Number(m[2]);
+    if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end)) return null;
+    if (start >= size) return -1;
+    if (end < start) return null;
+    end = Math.min(end, size - 1);
+  }
+  return { start, end };
+}
+
+function streamFile(res, filePath, opts, status, headers) {
+  res.writeHead(status, headers);
+  pipeline(fs.createReadStream(filePath, opts), res, (perr) => {
+    if (perr && !res.writableEnded) res.destroy();
+  });
+}
+
+// Site-styled 404: sites/<site>/404.html with status 404 (plain text if the page is missing).
+function serveNotFound(req, res, site) {
+  const p = path.join(ROOT, 'sites', site, '404.html');
+  fs.stat(p, (err, st) => {
     if (err || !st.isFile()) return send(res, 404, 'Not found', { 'Content-Type': 'text/plain' });
+    const headers = {
+      'Content-Type': MIME['.html'],
+      'Cache-Control': 'no-cache',
+      'Content-Length': st.size,
+      'X-Content-Type-Options': 'nosniff',
+    };
+    if (req.method === 'HEAD') return send(res, 404, '', headers);
+    streamFile(res, p, undefined, 404, headers);
+  });
+}
+
+function serveFile(req, res, filePath, onMissing) {
+  fs.stat(filePath, (err, st) => {
+    if (err || !st.isFile()) {
+      if (onMissing) return onMissing();
+      return send(res, 404, 'Not found', { 'Content-Type': 'text/plain' });
+    }
     const ext = path.extname(filePath).toLowerCase();
     // html/css/js revalidate every request (304 via Last-Modified); images/fonts cache a day
     const cache = ['.html', '.css', '.js'].includes(ext) ? 'no-cache' : 'public, max-age=86400';
@@ -109,6 +161,7 @@ function serveFile(req, res, filePath) {
       'Cache-Control': cache,
       'Last-Modified': st.mtime.toUTCString(),
       'Content-Length': st.size,
+      'Accept-Ranges': 'bytes',
       'X-Content-Type-Options': 'nosniff',
     };
     const ims = Date.parse(req.headers['if-modified-since'] || '');
@@ -116,11 +169,22 @@ function serveFile(req, res, filePath) {
       delete headers['Content-Length'];
       return send(res, 304, '', headers);
     }
+    const range = parseRange(req.headers.range, st.size);
+    if (range === -1) {
+      return send(res, 416, '', {
+        'Content-Range': `bytes */${st.size}`,
+        'Accept-Ranges': 'bytes',
+        'X-Content-Type-Options': 'nosniff',
+      });
+    }
+    if (range) {
+      headers['Content-Range'] = `bytes ${range.start}-${range.end}/${st.size}`;
+      headers['Content-Length'] = range.end - range.start + 1;
+      if (req.method === 'HEAD') return send(res, 206, '', headers);
+      return streamFile(res, filePath, { start: range.start, end: range.end }, 206, headers);
+    }
     if (req.method === 'HEAD') return send(res, 200, '', headers);
-    res.writeHead(200, headers);
-    pipeline(fs.createReadStream(filePath), res, (perr) => {
-      if (perr && !res.writableEnded) res.destroy();
-    });
+    streamFile(res, filePath, undefined, 200, headers);
   });
 }
 
@@ -287,6 +351,9 @@ function handleRequest(req, res) {
   }
   if (!site) return send(res, 404, 'Not found', { 'Content-Type': 'text/plain' });
 
+  // The 404 page itself always answers with status 404 (no redirect, no 200).
+  if (urlPath === '/404' || urlPath === '/404.html') return serveNotFound(req, res, site);
+
   // Canonical 301s: strip .html, /index.html -> /, trailing slash -> none. Query preserved.
   const redirect = (loc) => send(res, 301, '', { Location: encodeURI(prefix + loc) + query, 'Cache-Control': 'no-cache' });
   if (urlPath === '/index.html') return redirect('/');
@@ -299,7 +366,7 @@ function handleRequest(req, res) {
   if (urlPath !== '/' && !isPathWithin(siteRoot, p)) return send(res, 403, 'Forbidden');
   if (urlPath === '/') p = path.join(siteRoot, 'index.html');
   else if (!path.extname(p)) p = `${p}.html`; // clean URLs: /services -> services.html
-  serveFile(req, res, p);
+  serveFile(req, res, p, () => serveNotFound(req, res, site));
 }
 
 const server = http.createServer((req, res) => {
