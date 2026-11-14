@@ -648,6 +648,13 @@ video.work-zoom-media { width: min(90vw, 85vh); }
 .footer-social a:hover, .footer-legal a:hover { color: var(--color-sky-400); }
 .footer-social a[aria-label="X (opens in a new tab)"] { display: inline-flex; align-items: center; justify-content: center; line-height: 1; vertical-align: middle; }
 .footer-social a[aria-label="X (opens in a new tab)"] svg { display: block; }
+.footer-social { gap: 10px; }
+.footer-social a {
+  display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; color: rgba(255, 255, 255, 0.7);
+}
+.footer-social a:hover { color: var(--color-sky-400); border-color: var(--color-sky-400); }
+.footer-social svg { display: block; }
 
 /* ── Reveal animation ─────────────────────────────────────────────── */
 html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity var(--duration-slower) var(--ease-out), transform var(--duration-slower) var(--ease-out); }
