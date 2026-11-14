@@ -437,19 +437,44 @@ video.work-zoom-media { width: min(90vw, 85vh); }
 .pricing-note { text-align: center; font-family: var(--font-sans); font-size: 14px; color: var(--color-neutral-600); margin: 36px 0 0; }
 .pricing-note a { color: var(--color-sky-700); font-weight: 600; }
 .pricing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.pricing-option { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(180px, 1fr) 2fr minmax(200px, auto); align-items: center; gap: 12px 32px;
+.pricing-option { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(180px, 1fr) 2fr minmax(200px, auto); align-items: center; gap: 16px 40px;
   background: var(--color-neutral-50); border: 1.5px dashed var(--color-border-strong); box-shadow: none; }
 .pricing-option .plan-price, .pricing-option .check-list, .pricing-option .plan-desc { margin: 0; }
 .pricing-option-head h3 { margin: 0 0 4px; }
-.pricing-option--entry .check-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; }
-.pricing-option--custom .plan-desc { font-size: 15px; color: var(--color-neutral-700); }
 .pricing-option .plan-cta { margin: 0; }
+/* Entry card: 2 x 2 tick list, ticks in a fixed column with hanging indent */
+.pricing-option--entry .check-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 32px; align-content: center; }
+.pricing-option--entry .check-list span { padding-left: 1.4em; text-indent: -1.4em; line-height: 1.5; }
+/* Custom card: brand navy with faint waves */
+.pricing-option--custom {
+  position: relative; overflow: hidden; padding: 44px 48px; border: 0;
+  background: var(--color-navy-900); box-shadow: var(--shadow-navy-md);
+}
+.pricing-option--custom > :not(.pricing-waves) { position: relative; z-index: 1; }
+.pricing-waves {
+  position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+  fill: none; stroke: var(--color-sky-300); stroke-width: 1.5; opacity: 0.18;
+}
+.pricing-option--custom h3 { color: var(--color-neutral-0); font-size: 24px; }
+.pricing-option--custom .plan-desc { font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); }
+.pricing-cta-light {
+  background: var(--color-neutral-0); color: var(--color-navy-900);
+  border: 1px solid var(--color-neutral-0); box-shadow: var(--shadow-sm); font-weight: var(--weight-semibold, 600);
+}
+.pricing-cta-light:hover { background: var(--color-sky-50); color: var(--color-navy-900); transform: translateY(-1px) scale(1.015); }
+.pricing-option--custom :focus-visible { outline-color: var(--color-sky-200); }
+/* Recommended plan button: white label needs the darker sky shades for AA */
+.pricing-cta-strong, .pricing-cta-strong:hover {
+  background: linear-gradient(180deg, var(--color-sky-700) 0%, var(--color-sky-800) 100%); color: var(--color-neutral-0);
+}
 @media (max-width: 1024px) {
   .pricing-option { grid-template-columns: 1fr; align-items: start; }
+  .pricing-option--entry .check-list { grid-template-columns: 1fr; }
+  .pricing-option--custom { padding: 36px 32px; }
 }
 @media (max-width: 768px) {
   .pricing-grid { grid-template-columns: 1fr; }
-  .pricing-option--entry .check-list { grid-template-columns: 1fr; }
+  .pricing-option--custom { padding: 32px 24px; }
 }
 
 /* ── Bookkeeping model table ──────────────────────────────────────── */
