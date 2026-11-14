@@ -219,18 +219,24 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 .work-media img, .work-media video { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
 
 /* Work carousel (enabled by work-carousel.js; without JS the grid above stays as is) */
-.work-carousel { --work-gap: 20px; --work-card-w: calc((100% - 2 * var(--work-gap)) / 3); position: relative; border-radius: 24px; }
+.work-carousel {
+  --work-gap: 20px; --work-card-w: calc((100% - 2 * var(--work-gap)) / 3);
+  --work-ease: cubic-bezier(0.45, 0, 0.55, 1); --work-slide-ms: 800ms;
+  position: relative; border-radius: 24px;
+}
 .work-carousel:focus-visible { outline: 2px solid var(--color-sky-500); outline-offset: 6px; }
-.work-viewport { overflow: hidden; padding: 4px 0; touch-action: pan-y; }
+/* pan-y keeps vertical page scrolling and hands horizontal swipes to the script;
+   like "manipulation", it also turns off the browser's double-tap zoom here. */
+.work-viewport { overflow: hidden; padding: 4px 0; touch-action: pan-y pinch-zoom; }
 .work-carousel .work-track { display: grid; grid-template-columns: var(--work-card-w); justify-content: center; }
 .work-carousel .work-slide {
-  grid-area: 1 / 1; position: relative;
+  grid-area: 1 / 1; position: relative; cursor: pointer;
   transform: translateX(calc(var(--work-offset, 0) * (100% + var(--work-gap)))) scale(var(--work-scale, 1));
-  transition: transform 500ms ease, opacity 500ms ease, visibility 0s linear 0s;
+  transition: transform var(--work-slide-ms) var(--work-ease), opacity var(--work-slide-ms) var(--work-ease), visibility 0s linear 0s;
 }
 .work-carousel .work-slide::after {
   content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
-  background: var(--color-neutral-0); opacity: 0; transition: opacity 500ms ease;
+  background: var(--color-neutral-0); opacity: 0; transition: opacity var(--work-slide-ms) var(--work-ease);
 }
 .work-carousel .work-slide.is-side,
 .work-carousel .work-slide.is-hidden { --work-scale: 0.88; }
@@ -238,19 +244,50 @@ h1, h2, h3 { font-family: var(--font-display, 'Outfit', system-ui, sans-serif); 
 .work-carousel .work-slide.is-hidden::after { opacity: 0.5; }
 .work-carousel .work-slide.is-hidden {
   opacity: 0; visibility: hidden;
-  transition: transform 500ms ease, opacity 500ms ease, visibility 0s linear 500ms;
+  transition: transform var(--work-slide-ms) var(--work-ease), opacity var(--work-slide-ms) var(--work-ease), visibility 0s linear var(--work-slide-ms);
 }
 .work-carousel .work-slide.is-jump,
 .work-carousel .work-slide.is-jump::after { transition: none; }
-.work-controls { display: flex; justify-content: center; gap: 12px; margin-top: 24px; }
-.work-ctrl { width: 40px; padding: 0; }
-.work-ctrl svg { display: block; }
+.work-flash {
+  position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center;
+  pointer-events: none; opacity: 0;
+}
+.work-flash span {
+  display: flex; align-items: center; justify-content: center; width: 88px; height: 88px; border-radius: 50%;
+  background: var(--color-navy-900); color: var(--color-neutral-0); box-shadow: var(--shadow-navy-md);
+}
+.work-flash svg { width: 38px; height: 38px; }
+.work-flash.is-on { animation: work-flash 600ms ease-out forwards; }
+@keyframes work-flash {
+  0% { opacity: 0; transform: scale(0.85); }
+  25% { opacity: 0.9; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.08); }
+}
+.work-badge {
+  position: absolute; top: 14px; right: 14px; z-index: 2; display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px; background: var(--color-navy-900); color: var(--color-neutral-0);
+  font-family: var(--font-sans); font-size: 12px; font-weight: 600; letter-spacing: 0.02em; pointer-events: none;
+}
+.work-badge[hidden] { display: none; }
+.work-badge svg { width: 12px; height: 12px; }
+.work-zoom {
+  position: fixed; inset: 0; z-index: 1500; display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.7); cursor: zoom-out; outline: none;
+}
+.work-zoom[hidden] { display: none; }
+.work-zoom-frame { display: flex; align-items: center; justify-content: center; }
+.work-zoom-media {
+  display: block; max-width: 90vw; max-height: 85vh; width: auto; height: auto; object-fit: contain;
+  border-radius: 16px; background: var(--color-neutral-0); box-shadow: var(--shadow-lg); cursor: default;
+}
+video.work-zoom-media { width: min(90vw, 85vh); }
 @media (max-width: 767.98px) {
   .work-carousel { --work-gap: 12px; --work-card-w: 80%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .work-carousel .work-slide,
   .work-carousel .work-slide::after { transition: none; }
+  .work-flash.is-on { animation-duration: 1ms; }
 }
 .icon-tile--sm { width: 52px; height: 52px; margin-bottom: 16px; flex-shrink: 0; }
 .icon-tile--sm img { width: 30px; height: 30px; }
