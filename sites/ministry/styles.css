@@ -609,6 +609,15 @@ video.work-zoom-media { width: min(90vw, 85vh); }
 .contact-socials a { font-family: var(--font-sans); font-size: 14px; color: var(--color-sky-700); }
 .contact-socials a[aria-label="X (opens in a new tab)"] { display: inline-flex; align-items: center; justify-content: center; line-height: 1; vertical-align: middle; }
 .contact-socials a[aria-label="X (opens in a new tab)"] svg { display: block; }
+.contact-card .contact-line { display: flex; align-items: center; gap: 10px; }
+.contact-icon { flex-shrink: 0; color: var(--color-sky-700); }
+.contact-socials { gap: 10px; }
+.contact-socials a {
+  display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+  border: 1px solid var(--color-neutral-200); border-radius: 50%; color: var(--color-navy-900); background: var(--color-neutral-0);
+}
+.contact-socials a:hover { color: var(--color-sky-700); border-color: var(--color-sky-100); }
+.contact-socials svg { display: block; }
 
 /* ── Footer ───────────────────────────────────────────────────────── */
 .footer { background: var(--color-navy-900); padding: 72px 48px 40px; }
