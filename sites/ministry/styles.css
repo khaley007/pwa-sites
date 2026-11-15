@@ -442,9 +442,22 @@ video.work-zoom-media { width: min(90vw, 85vh); }
 .pricing-option .plan-price, .pricing-option .check-list, .pricing-option .plan-desc { margin: 0; }
 .pricing-option-head h3 { margin: 0 0 4px; }
 .pricing-option .plan-cta { margin: 0; }
-/* Entry card: 2 x 2 tick list, ticks in a fixed column with hanging indent */
-.pricing-option--entry .check-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 32px; align-content: center; }
+/* Entry card: price | ticks | button, split by dashed dividers matching the card border */
+.pricing-option--entry { grid-template-columns: auto minmax(0, 1fr) auto; gap: 0; align-items: stretch; }
+.pricing-option--entry > * { display: flex; flex-direction: column; justify-content: center; }
+.pricing-option--entry .pricing-option-head { padding-right: 32px; }
+.pricing-option--entry .check-list {
+  display: grid; grid-template-columns: repeat(2, max-content); justify-content: center; align-content: center; gap: 12px 40px;
+  padding: 0 32px; border-left: 1.5px dashed var(--color-border-strong); border-right: 1.5px dashed var(--color-border-strong);
+}
 .pricing-option--entry .check-list span { padding-left: 1.4em; text-indent: -1.4em; line-height: 1.5; }
+.pricing-option--entry .plan-cta { padding-left: 32px; }
+.pricing-option--entry .plan-cta .btn { width: auto; }
+/* Compare table: scrolls sideways on phones instead of stacking */
+.pricing-table-scroll { position: relative; margin-bottom: 24px; }
+.pricing-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 20px; }
+.pricing-table-wrap:focus-visible { outline: 2px solid var(--color-sky-500); outline-offset: 2px; }
+.pricing-table-wrap .model-table { margin-bottom: 0; }
 /* Custom card: brand navy with faint waves */
 .pricing-option--custom {
   position: relative; overflow: hidden; padding: 44px 48px; border: 0;
@@ -469,12 +482,36 @@ video.work-zoom-media { width: min(90vw, 85vh); }
 }
 @media (max-width: 1024px) {
   .pricing-option { grid-template-columns: 1fr; align-items: start; }
-  .pricing-option--entry .check-list { grid-template-columns: 1fr; }
+  .pricing-option--entry .pricing-option-head { padding: 0 0 20px; }
+  .pricing-option--entry .check-list { padding: 20px 0; }
+  .pricing-option--entry .plan-cta { padding: 20px 0 0; }
+  .pricing-option--entry .check-list {
+    grid-template-columns: 1fr; justify-content: stretch; border: 0;
+    border-top: 1.5px dashed var(--color-border-strong); border-bottom: 1.5px dashed var(--color-border-strong);
+  }
+  .pricing-option--entry .plan-cta .btn { width: 100%; }
   .pricing-option--custom { padding: 36px 32px; }
 }
 @media (max-width: 768px) {
   .pricing-grid { grid-template-columns: 1fr; }
   .pricing-option--custom { padding: 32px 24px; }
+  /* Keep the two-column table; restore table display overridden by the shared .model-table phone rules */
+  .pricing-table-wrap { scrollbar-width: thin; scrollbar-color: var(--color-sky-400) var(--color-neutral-100); padding-bottom: 6px; }
+  .pricing-table-wrap::-webkit-scrollbar { height: 6px; }
+  .pricing-table-wrap::-webkit-scrollbar-track { background: var(--color-neutral-100); border-radius: 3px; }
+  .pricing-table-wrap::-webkit-scrollbar-thumb { background: var(--color-sky-400); border-radius: 3px; }
+  .pricing-table-scroll::after {
+    content: ""; position: absolute; top: 0; right: 0; bottom: 12px; width: 28px; pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--color-neutral-50)); border-radius: 0 20px 20px 0;
+  }
+  .pricing-table-wrap .model-table { display: table; min-width: 560px; }
+  .pricing-table-wrap .model-table thead { display: table-header-group; }
+  .pricing-table-wrap .model-table tbody { display: table-row-group; }
+  .pricing-table-wrap .model-row { display: table-row; }
+  .pricing-table-wrap .model-head, .pricing-table-wrap .model-cell { display: table-cell; padding: 14px 18px; border-bottom: 1px solid var(--color-neutral-100); }
+  .pricing-table-wrap .model-cell { font-size: 14px; }
+  .pricing-table-wrap .model-head--local { width: 50%; }
+  .pricing-table-wrap .model-row:last-child .model-cell { border-bottom: 0; }
 }
 
 /* ── Bookkeeping model table ──────────────────────────────────────── */
