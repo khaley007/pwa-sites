@@ -617,13 +617,6 @@ video.work-zoom-media { width: min(90vw, 85vh); }
 .team-card p { font-family: var(--font-sans); font-size: 14px; color: var(--color-neutral-600); line-height: 1.5; margin: 0; }
 
 /* ── Info bar / pricing box ───────────────────────────────────────── */
-.info-bar {
-  background: var(--color-neutral-0); border: 1px solid var(--color-neutral-200); border-radius: 20px;
-  padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
-  max-width: 1120px; margin: 24px auto 0;
-}
-.info-bar p { font-family: var(--font-sans); font-size: 15px; color: var(--color-neutral-700); margin: 0; }
-.info-bar strong { color: var(--color-navy-900); }
 
 .quote-box {
   background: var(--color-sky-50); border: 1px solid var(--color-sky-100); border-radius: 24px;
@@ -812,7 +805,6 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   .client-testimonial__image { aspect-ratio: 4 / 3; }
   .cta-band { padding: 48px 24px; }
   .quote-box { padding: 32px 24px; }
-  .info-bar { padding: 20px 24px; }
   .stat-num { font-size: 52px; }
   .photo-frame::before { inset: 16px -12px -12px 16px; }
   .btn--lg, .btn--hero-ghost { white-space: normal; height: auto; min-height: 52px; padding-top: 10px; padding-bottom: 10px; text-align: center; }
@@ -942,21 +934,29 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 
 .svc-handle-card .card-head { margin-bottom: 12px; }
 .svc-handle-card .card-head h3 { font-size: 18px; }
-.svc-more { margin-top: 12px; }
-.svc-more summary {
-  display: inline-flex; align-items: center; gap: 6px; list-style: none; cursor: pointer; border-radius: 4px;
-  font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--color-sky-700);
+.svc-handle-card { position: relative; }
+.svc-handle-card.is-open { z-index: 20; }
+.svc-handle-card .card-head { padding-right: 44px; }
+.svc-more-btn {
+  position: absolute; top: 18px; right: 18px; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; border: 1px solid var(--color-sky-100); background: var(--color-sky-50); color: var(--color-sky-800); cursor: pointer;
 }
-.svc-more summary::-webkit-details-marker { display: none; }
-.svc-more summary:hover { color: var(--color-navy-900); }
-.svc-more summary::after {
-  content: ""; width: 6px; height: 6px; margin-top: -3px;
-  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
-  transform: rotate(45deg); transition: transform var(--duration-base) var(--ease-out);
+.svc-more-btn:hover { background: var(--color-sky-100); color: var(--color-navy-900); }
+.svc-more-btn svg { width: 18px; height: 18px; transition: transform var(--duration-base) var(--ease-out); }
+.svc-more-btn[aria-expanded="true"] svg { transform: rotate(45deg); }
+/* Floating panel: absolutely positioned, so no card changes height */
+.svc-panel {
+  position: absolute; left: 0; right: 0; top: calc(100% + 8px); z-index: 20;
+  background: var(--color-neutral-0); border: 1px solid var(--color-neutral-200); border-radius: 20px;
+  padding: 20px 24px; box-shadow: var(--shadow-lg); outline: none;
 }
-.svc-more[open] summary::after { transform: rotate(225deg); margin-top: 3px; }
-.svc-more ul { margin: 10px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
-.svc-more li { font-family: var(--font-sans); font-size: 14px; line-height: 1.55; color: var(--color-neutral-700); }
+.svc-panel[hidden] { display: none; }
+.svc-panel.is-up { top: auto; bottom: calc(100% + 8px); }
+.svc-panel ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.svc-panel li { font-family: var(--font-sans); font-size: 14px; line-height: 1.55; color: var(--color-neutral-700); }
+.svc-handle-ph { display: none; border: 1px dashed var(--color-neutral-200); border-radius: 24px; background: var(--color-neutral-0); opacity: 0.55; min-height: 140px; }
+@media (min-width: 1025px) { .svc-handle-ph { display: block; } }
+@media (min-width: 769px) and (max-width: 1024px) { .svc-handle-ph { display: block; } .svc-handle-ph + .svc-handle-ph { display: none; } }
 .svc-handle-link { display: inline-block; margin-top: 12px; font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--color-sky-700); }
 
 /* Three-column widths: five cards as 3 on top, 2 centred below */
