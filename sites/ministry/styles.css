@@ -331,6 +331,7 @@ video.work-zoom-media { width: min(90vw, 85vh); }
 .client-testimonial__attribution { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-sans); font-size: 15px; line-height: 1.5; }
 .client-testimonial__attribution strong { color: var(--color-navy-900); font-size: 16px; }
 .client-testimonial__attribution span { color: var(--color-neutral-600); }
+.testimonial-date { color: var(--color-neutral-600); font-size: 14px; }
 
 .sayaka-photo { margin: 0; }
 .sayaka-photo img { height: auto; aspect-ratio: auto; object-fit: contain; }
