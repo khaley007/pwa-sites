@@ -1050,3 +1050,128 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   .footer::after { width: 260px; right: -50px; }
 }
 /* ── End footer logo watermark ────────────────────────────────────── */
+
+/* ── Websites page (/websites) ────────────────────────────────────── */
+.web-em { font-weight: 600; color: var(--color-navy-900); }
+.web-em-dark { font-weight: inherit; color: var(--color-sky-400); } /* navy backgrounds only */
+.cta-band strong.web-em-dark { font-weight: 600; }
+.web-hero h1 { max-width: 820px; margin-left: auto; margin-right: auto; }
+.web-hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+.page-hero .web-hero-note { font-size: 14px; color: var(--color-neutral-700); margin-top: 18px; }
+.web-anchor { scroll-margin-top: 72px; }
+.web-below { font-family: var(--font-sans); font-size: 16px; color: var(--color-neutral-700); line-height: 1.7; text-align: center; max-width: 720px; margin: 32px auto 0; }
+.web-center { display: flex; justify-content: center; margin-top: 24px; }
+.web-sub { max-width: 640px; }
+
+/* Three equal cards per row; one centred column on phones */
+.web-row3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; }
+.web-row3 > * { box-shadow: var(--shadow-md); }
+
+.web-problem { display: flex; flex-direction: column; gap: 14px; }
+.web-problem-num {
+  display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--color-sky-50); border: 1px solid var(--color-sky-100); color: var(--color-sky-800);
+  font-family: var(--font-display); font-size: 15px; font-weight: 700;
+}
+.card.web-problem p { font-size: 16px; color: var(--color-neutral-900); line-height: 1.6; }
+
+.web-split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.web-split-card { box-shadow: var(--shadow-md); }
+.web-split-card h3 { font-size: 20px; font-weight: 700; margin: 0 0 18px; }
+
+/* Bullet lists: sky-blue dots for included items, grey dots for notes */
+.web-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.web-list li { position: relative; padding-left: 18px; font-family: var(--font-sans); font-size: 14px; line-height: 1.55; color: var(--color-neutral-700); }
+.web-list li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 7px; height: 7px; border-radius: 50%; background: var(--color-sky-400); }
+.web-list--grey li::before { background: var(--color-neutral-400); }
+
+/* Past work: screenshot in a browser frame (16:9 images, never cropped) */
+.web-work { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.web-work.svc-work-card { grid-column: auto; }
+.web-browser {
+  display: block; width: 100%; padding: 0; border: 1px solid var(--color-neutral-200); border-radius: 12px; overflow: hidden;
+  background: var(--color-neutral-0); cursor: zoom-in; text-align: left;
+}
+.web-browser:focus-visible { outline: 2px solid var(--color-sky-500); outline-offset: 3px; }
+.web-browser-bar { display: flex; align-items: center; gap: 10px; height: 28px; padding: 0 10px; background: var(--color-neutral-100); border-bottom: 1px solid var(--color-neutral-200); }
+.web-browser-dots { display: flex; gap: 5px; }
+.web-browser-dots i { display: block; width: 8px; height: 8px; border-radius: 50%; background: var(--color-neutral-400); }
+.web-browser-url { flex: 1; height: 14px; border-radius: 7px; background: var(--color-neutral-0); }
+.web-browser-shot { display: block; aspect-ratio: 16 / 9; }
+.web-browser-shot img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.web-snapshot {
+  padding: 2px 10px; border-radius: 999px; background: var(--color-sky-50); border: 1px solid var(--color-sky-100);
+  font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--color-sky-800);
+}
+.web-work h3 { margin: 0; font-size: 18px; }
+.work-zoom-media[src*="/website-"] { aspect-ratio: 16 / 9; width: min(90vw, calc(85vh * 16 / 9)); height: auto; }
+
+/* Packages */
+.web-packages-head { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: 14px; }
+.web-packages-head h2 { margin: 0; max-width: 760px; }
+.web-chip {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px;
+  background: var(--color-navy-50); border: 1px solid var(--color-navy-100); color: var(--color-navy-900);
+  font-family: var(--font-sans); font-size: 13px; font-weight: 600;
+}
+.web-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--color-sky-500); }
+.web-plans { align-items: stretch; }
+.web-plan .plan-desc { font-size: 14px; line-height: 1.6; }
+.web-plan-label { font-family: var(--font-sans); font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-neutral-600); }
+.web-plan .plan-price { margin: 2px 0 2px; }
+.web-plan-note { font-family: var(--font-sans); font-size: 13px; color: var(--color-neutral-600); margin: 0 0 16px; }
+.web-plan-best { font-family: var(--font-sans); font-size: 14px; line-height: 1.6; color: var(--color-neutral-700); margin: 0; }
+.web-plan-best span { font-weight: 600; color: var(--color-neutral-900); }
+.web-plan-rule { border: 0; border-top: 1px solid var(--color-neutral-200); margin: 20px 0; }
+.web-plan-h { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--color-navy-900); margin: 0 0 12px; }
+.web-plan .web-list + .web-plan-h { margin-top: 22px; }
+.web-plan .web-list:last-of-type { margin-bottom: 28px; }
+
+/* Compare table: label column plus three packages */
+.web-compare .model-table { table-layout: fixed; }
+.web-compare .model-head--local { width: auto; }
+.web-compare .model-head, .web-compare .model-cell { padding-left: 20px; padding-right: 20px; }
+.web-compare th.web-compare-label { width: 24%; }
+.web-compare th.model-cell.web-compare-label { font-weight: 600; color: var(--color-navy-900); text-align: left; }
+
+/* Which one fits */
+.web-fit { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
+.card.web-fit .web-fit-lead { font-size: 16px; font-weight: 600; color: var(--color-neutral-900); line-height: 1.55; }
+.card.web-fit .web-fit-out { font-size: 16px; }
+
+/* Steps: 3 + 3 */
+.web-step h3 { font-size: 18px; font-weight: 700; margin: 0 0 10px; }
+.web-step-num { color: var(--color-sky-800); }
+
+/* After launch band */
+.web-after { text-align: center; }
+.web-after h2 { margin: 0 0 16px; }
+.web-after p { font-family: var(--font-sans); font-size: 17px; color: var(--color-neutral-700); line-height: 1.7; margin: 0 0 20px; }
+.web-link { font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: var(--color-navy-900); text-decoration: underline; text-decoration-color: var(--color-sky-400); text-underline-offset: 4px; }
+.web-link:hover { color: var(--color-sky-800); }
+
+/* Costs: 2 x 2 */
+.web-costs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.web-cost { box-shadow: var(--shadow-md); font-family: var(--font-sans); font-size: 15px; line-height: 1.6; color: var(--color-neutral-700); padding: 24px; }
+.web-cost strong { color: var(--color-navy-900); font-weight: 600; }
+
+@media (max-width: 768px) {
+  .web-row3 { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-left: auto; margin-right: auto; }
+  .web-split, .web-costs { grid-template-columns: minmax(0, 1fr); }
+  .web-hero-actions .btn { width: 100%; max-width: 360px; }
+  /* Past work becomes a swipeable rail */
+  .web-row3.web-work-rail {
+    display: flex; max-width: none; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    gap: 12px; margin: 0 -20px; padding: 4px 20px 16px; scroll-padding: 0 20px; scrollbar-width: none;
+  }
+  .web-work-rail::-webkit-scrollbar { display: none; }
+  .web-work-rail > .web-work { flex: 0 0 82%; scroll-snap-align: center; }
+  .web-compare .model-table { min-width: 640px; }
+  .web-compare .pricing-table-wrap .model-head--local { width: auto; }
+}
+@media (min-width: 769px) {
+  .web-plan .plan-desc { min-height: calc(4 * 1.6em); }
+}
+.web-plan .plan-desc { margin-bottom: 16px; }
+/* Same accent hue, nudged darker so it clears 4.5:1 over the ripple's pale-sky end */
+.web-hero h1 .accent { color: color-mix(in srgb, var(--color-sky-700) 80%, var(--color-sky-800)); }
