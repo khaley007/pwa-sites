@@ -1175,3 +1175,22 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 .web-plan .plan-desc { margin-bottom: 16px; }
 /* Same accent hue, nudged darker so it clears 4.5:1 over the ripple's pale-sky end */
 .web-hero h1 .accent { color: color-mix(in srgb, var(--color-sky-700) 80%, var(--color-sky-800)); }
+
+/* ── Sitewide: Websites links, footer Explore grid, tighter phone menu ── */
+.web-inline-link { color: var(--color-navy-900); font-weight: 600; text-decoration: underline; text-decoration-color: var(--color-sky-400); text-underline-offset: 3px; }
+.web-inline-link:hover { color: var(--color-sky-800); }
+.web-card-link { display: inline-block; margin-top: 12px; font-size: 14px; }
+/* Footer Explore: 8 links as 2 columns x 4 rows, heading across both */
+.footer-links { display: grid; grid-auto-flow: column; grid-template-rows: auto repeat(4, auto); grid-template-columns: repeat(2, max-content); column-gap: 32px; row-gap: 10px; align-content: start; }
+.footer-links .footer-heading { grid-column: 1 / -1; grid-row: 1; }
+.footer-links a { white-space: nowrap; }
+@media (max-width: 1024px) {
+  /* Phone/tablet menu: rows touch, each link still a 44px tap target */
+  .nav-menu { gap: 0; padding-top: 8px; padding-bottom: 16px; }
+  .nav-menu > a:not(.btn) { display: flex; align-items: center; min-height: 44px; padding: 0 4px; }
+  .nav-menu > .btn { margin-top: 10px; }
+}
+/* Eight nav links: tighter spacing on narrow desktops so the menu clears the logo */
+@media (min-width: 1025px) and (max-width: 1180px) {
+  .nav-menu { gap: 14px; }
+}
