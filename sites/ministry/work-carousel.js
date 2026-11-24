@@ -79,6 +79,22 @@
 
   var lastOffsets = slides.map(function () { return null; });
 
+  // Links and buttons inside aria-hidden (side) slides must not take keyboard focus.
+  // Their original tabindex is kept in data-work-tab and restored when the slide is centre.
+  var FOCUSABLE = 'a[href], button, input, select, textarea, video[controls], [tabindex]';
+  function setFocusable(slide, on) {
+    Array.prototype.forEach.call(slide.querySelectorAll(FOCUSABLE), function (el) {
+      if (!on) {
+        if (!el.hasAttribute('data-work-tab')) el.setAttribute('data-work-tab', el.getAttribute('tabindex') || '');
+        el.setAttribute('tabindex', '-1');
+      } else if (el.hasAttribute('data-work-tab')) {
+        var t = el.getAttribute('data-work-tab');
+        if (t === '') el.removeAttribute('tabindex'); else el.setAttribute('tabindex', t);
+        el.removeAttribute('data-work-tab');
+      }
+    });
+  }
+
   function render() {
     slides.forEach(function (slide, i) {
       var o = offsetOf(i);
@@ -94,6 +110,7 @@
       slide.inert = Math.abs(o) > 1;
       if (o !== 0) slide.setAttribute('aria-hidden', 'true');
       else slide.removeAttribute('aria-hidden');
+      setFocusable(slide, o === 0);
       lastOffsets[i] = o;
     });
     var c = slides[current];

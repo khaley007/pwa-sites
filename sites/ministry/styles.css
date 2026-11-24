@@ -1227,3 +1227,22 @@ html.js .web-fit.reveal, html.js .svc-work-grid .svc-work-card.reveal {
   .blog-card:hover, .blog-card:has(a:focus-visible),
   .svc-work-grid .svc-work-card:hover, .svc-work-grid .svc-work-card:has(.svc-zoom-trigger:focus-visible) { scale: none; }
 }
+
+/* ── Homepage work carousel: free-standing 16:9 media, captions below ── */
+.work-grid .work-tile.card { background: transparent; border: 0; border-radius: 24px; padding: 0; box-shadow: none; }
+.work-grid .work-media {
+  aspect-ratio: 16 / 9; margin-bottom: 16px; border-radius: 24px; overflow: hidden;
+  background: var(--color-neutral-50); box-shadow: var(--shadow-md);
+  transform-origin: center; transition: scale 200ms ease, box-shadow 200ms ease;
+}
+.work-grid .work-media img, .work-grid .work-media video { object-fit: cover; }
+/* Near-square screenshots: show them whole instead of cropping titles and headers */
+.work-grid .work-media--contain img, .work-grid .work-media--contain video { object-fit: contain; }
+.work-grid .work-tile h3 { margin: 0 0 4px; font-size: 18px; font-weight: 700; }
+.work-grid .work-tile p { font-size: 14px; color: var(--color-neutral-600); }
+/* Room for the media shadow and hover lift inside the clipped viewport */
+.work-carousel .work-viewport { padding: 12px 0 24px; }
+.work-carousel .work-slide.is-center .work-media:hover { scale: 1.03; box-shadow: var(--shadow-lg); }
+@media (prefers-reduced-motion: reduce) {
+  .work-carousel .work-slide.is-center .work-media:hover { scale: none; }
+}
