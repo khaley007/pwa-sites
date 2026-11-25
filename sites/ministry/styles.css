@@ -1294,3 +1294,20 @@ html.js .web-fit.reveal {
 @media (max-width: 768px) {
   .svc-work-grid .svc-work-card.card { padding: 16px; }
 }
+
+/* ── Navy showcase bands: Websites past work and Services work ───────── */
+.web-showcase .eyebrow { background: rgba(77, 196, 232, 0.14); border-color: rgba(77, 196, 232, 0.35); color: var(--color-sky-200); }
+.web-showcase .h-display, .web-showcase .h-sub { color: var(--color-neutral-0); }
+.web-showcase .section-sub { color: rgba(255, 255, 255, 0.8); }
+.web-showcase :focus-visible { outline-color: var(--color-sky-200); }
+/* Websites past work: light captions, deeper shadow suited to navy */
+.web-showcase .web-work h3 { color: var(--color-neutral-0); }
+.web-showcase .web-work p { color: rgba(255, 255, 255, 0.8); }
+.web-showcase .web-shot, .web-showcase .svc-work-grid .work-media { box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35); }
+.web-showcase .web-shot:hover, .web-showcase .web-shot:focus-visible,
+.web-showcase .svc-work-grid .work-media:hover, .web-showcase .svc-work-grid .work-media:focus-visible { box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45); }
+/* Services panels: glass on navy, like the footer contact card */
+.web-showcase .svc-work-grid .svc-work-card.card { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14); box-shadow: none; }
+.web-showcase .svc-work-grid .svc-work-card h3 { color: var(--color-neutral-0); }
+.web-showcase .svc-work-grid .svc-work-card p { color: rgba(255, 255, 255, 0.8); }
+.web-showcase .svc-tags li { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.28); color: var(--color-neutral-0); }
