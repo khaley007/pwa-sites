@@ -1206,26 +1206,26 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 .pwa-hero-ripple h1 .accent { color: color-mix(in srgb, var(--color-sky-700) 80%, var(--color-sky-800)); }
 
 /* ── Hover lift on cards that act as links or open a zoom view ───────── */
-/* Websites fit cards, Websites past-work images, blog listing card, services work cards.
+/* Websites fit cards, Websites past-work images, blog listing card, services work media.
    Uses the standalone `scale` property so it does not fight the .reveal transform. */
-.web-fit, .web-shot, .blog-card, .svc-work-grid .svc-work-card {
+.web-fit, .web-shot, .blog-card, .svc-work-grid .work-media {
   transform-origin: center; transition: scale 200ms ease, box-shadow 200ms ease;
 }
-html.js .web-fit.reveal, html.js .svc-work-grid .svc-work-card.reveal {
+html.js .web-fit.reveal {
   transition: opacity var(--duration-slower) var(--ease-out), transform var(--duration-slower) var(--ease-out), scale 200ms ease, box-shadow 200ms ease;
 }
 .web-fit:hover, .web-fit:has(.web-fit-out:focus-visible),
 .web-shot:hover, .web-shot:focus-visible,
 .blog-card:hover, .blog-card:has(a:focus-visible),
-.svc-work-grid .svc-work-card:hover, .svc-work-grid .svc-work-card:has(.svc-zoom-trigger:focus-visible) {
+.svc-work-grid .work-media:hover, .svc-work-grid .work-media:focus-visible {
   scale: 1.03; box-shadow: var(--shadow-lg);
 }
-.svc-work-grid .svc-work-card:hover, .svc-work-grid .svc-work-card:has(.svc-zoom-trigger:focus-visible) { position: relative; z-index: 1; }
+.svc-work-grid .work-media:hover, .svc-work-grid .work-media:focus-visible { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) {
   .web-fit:hover, .web-fit:has(.web-fit-out:focus-visible),
   .web-shot:hover, .web-shot:focus-visible,
   .blog-card:hover, .blog-card:has(a:focus-visible),
-  .svc-work-grid .svc-work-card:hover, .svc-work-grid .svc-work-card:has(.svc-zoom-trigger:focus-visible) { scale: none; }
+  .svc-work-grid .work-media:hover, .svc-work-grid .work-media:focus-visible { scale: none; }
 }
 
 /* ── Homepage work carousel: free-standing 16:9 media, captions below ── */
@@ -1246,3 +1246,15 @@ html.js .web-fit.reveal, html.js .svc-work-grid .svc-work-card.reveal {
 @media (prefers-reduced-motion: reduce) {
   .work-carousel .work-slide.is-center .work-media:hover { scale: none; }
 }
+
+/* ── Services "Examples of our work": free-standing media, captions below ── */
+.svc-work-grid .svc-work-card.card { background: transparent; border: 0; border-radius: 0; padding: 0; box-shadow: none; }
+.svc-work-grid .work-media {
+  aspect-ratio: 16 / 15; margin-bottom: 16px; border-radius: 24px; overflow: hidden;
+  background: var(--color-neutral-50); box-shadow: var(--shadow-md);
+}
+.svc-work-grid .work-media img, .svc-work-grid .work-media video { object-fit: cover; }
+/* The websites collage is wider than the frame; show it whole rather than clip the logo and buttons */
+.svc-work-grid .work-media--contain img { object-fit: contain; }
+.svc-work-grid .svc-work-card h3 { margin: 0 0 4px; font-size: 18px; font-weight: 700; }
+.svc-work-grid .svc-work-card p { font-size: 14px; color: var(--color-neutral-600); }
