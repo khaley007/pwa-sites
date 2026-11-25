@@ -960,7 +960,7 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 .svc-handle-link { display: inline-block; margin-top: 12px; font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--color-sky-700); }
 
 /* Three-column widths: five cards as 3 on top, 2 centred below */
-@media (min-width: 1025px) {
+@media (min-width: 1061px) {
   .svc-work-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .svc-work-card { grid-column: span 2; }
   .svc-work-card:nth-child(4) { grid-column: 2 / span 2; }
@@ -1258,3 +1258,39 @@ html.js .web-fit.reveal {
 .svc-work-grid .work-media--contain img { object-fit: contain; }
 .svc-work-grid .svc-work-card h3 { margin: 0 0 4px; font-size: 18px; font-weight: 700; }
 .svc-work-grid .svc-work-card p { font-size: 14px; color: var(--color-neutral-600); }
+
+/* ── Homepage work showcase on a navy band ───────────────────────────── */
+.work-showcase .eyebrow { background: rgba(77, 196, 232, 0.14); border-color: rgba(77, 196, 232, 0.35); color: var(--color-sky-200); }
+.work-showcase .h-display, .work-showcase .h-sub { color: var(--color-neutral-0); }
+.work-showcase .section-sub { color: rgba(255, 255, 255, 0.8); }
+.work-showcase .work-carousel:focus-visible { outline-color: var(--color-sky-200); }
+.work-showcase :focus-visible { outline-color: var(--color-sky-200); }
+.work-showcase .btn--ghost { background: rgba(255, 255, 255, 0.1); color: var(--color-neutral-0); border: 1px solid rgba(255, 255, 255, 0.35); }
+.work-showcase .btn--ghost:hover { background: rgba(255, 255, 255, 0.18); color: var(--color-neutral-0); box-shadow: none; }
+/* Side slides dim with opacity (no white fade); captions dim with them */
+.work-showcase .work-carousel .work-slide::after { display: none; }
+.work-showcase .work-carousel .work-slide.is-side { opacity: 0.5; }
+.work-showcase .work-grid .work-tile h3 { color: var(--color-neutral-0); }
+.work-showcase .work-grid .work-tile p { color: rgba(255, 255, 255, 0.8); }
+.work-showcase .work-grid .web-card-link { color: var(--color-sky-200); text-decoration-color: color-mix(in srgb, var(--color-sky-200) 50%, transparent); }
+.work-showcase .work-grid .web-card-link:hover { color: var(--color-neutral-0); }
+.work-showcase .work-grid .work-media { box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35); }
+.work-showcase .work-grid .work-media--contain { background: var(--color-neutral-0); }
+.work-showcase .work-carousel .work-slide.is-center .work-media:hover { box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45); }
+
+/* ── Services "Examples of our work": light panels and spacing ───────── */
+.svc-work-grid { column-gap: 32px; row-gap: 48px; }
+.svc-work-grid .svc-work-card.card { background: var(--color-neutral-50); border: 0; border-radius: var(--radius-card, 24px); padding: 20px; box-shadow: var(--shadow-sm); }
+.svc-work-grid .work-media { margin-bottom: 16px; }
+.svc-work-grid .work-media--contain { background: var(--color-neutral-0); }
+.svc-work-grid .svc-work-card h3 { margin: 0 0 6px; }
+.svc-work-grid .svc-work-card p { margin: 0 0 14px; }
+.svc-work-grid .svc-tags { margin-top: auto; gap: 8px; }
+@media (min-width: 769px) and (max-width: 1060px) {
+  .svc-work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-work-card, .svc-work-card:nth-child(4) { grid-column: auto; }
+  .svc-work-card:last-child { grid-column: 1 / -1; justify-self: center; width: calc(50% - 16px); }
+}
+@media (max-width: 768px) {
+  .svc-work-grid .svc-work-card.card { padding: 16px; }
+}
